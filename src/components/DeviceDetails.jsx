@@ -5,11 +5,12 @@ import Button from "./ui/Button";
 import Separator from "./ui/Separator";
 import useToast from "./hooks/useToast";
 import useData from "../hooks/useData";
-import { setDeviceState } from "../helpers/data-helper";
+import { setDeviceState, setToggleState } from "../helpers/data-helper";
 import useAuth from "../hooks/useAuth";
 
-const DeviceDetails = ({ deviceName, handleStateChange }) => {
+const DeviceDetails = ({ deviceName }) => {
   const { toastInfo } = useToast();
+  const { user } = useAuth();
   const { devices } = useData();
   const { userDataPath } = useAuth();
 
@@ -21,6 +22,23 @@ const DeviceDetails = ({ deviceName, handleStateChange }) => {
       setDevice(device);
     }
   }, [devices, deviceName]);
+
+  const handleClick = (newState, enabled) => {
+    if (!enabled) {
+      toastInfo(`${device.name} is disabled.`);
+      return;
+    }
+    const action = newState ? "on" : "off";
+    const message = {
+      actionType: "stateToggle",
+      action: action,
+      name: device.name,
+      sentBy: user.displayName,
+      message: `turned ${action} the ${device.name}.`,
+      timeSent: new Date().getTime(),
+    };
+    setToggleState(userDataPath, device.name, newState, message);
+  };
 
   const handleDeviceStateChange = (newState) => {
     if (device.state) {
@@ -46,11 +64,17 @@ const DeviceDetails = ({ deviceName, handleStateChange }) => {
       <Separator />
       <div className="flex gap-2">
         <div className="flex flex-col items-center gap-2">
-          <Toggle value={device?.enabled} onClick={handleDeviceStateChange} />
+          <Toggle
+            value={device?.enabled}
+            onClick={() => handleDeviceStateChange(!device.enabled)}
+          />
           <h1 className="text-secondary-foreground">Toggle enable</h1>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <Toggle value={device?.state} onClick={handleStateChange} />
+          <Toggle
+            value={device?.state}
+            onClick={() => handleClick(!device.state, device.enabled)}
+          />
           <h1 className="text-secondary-foreground">Toggle state</h1>
         </div>
       </div>

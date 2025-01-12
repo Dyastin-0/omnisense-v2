@@ -3,12 +3,6 @@ import { motion } from "framer-motion";
 import clsx from "clsx";
 
 const Toggle = ({ value, onClick }) => {
-  const toggleSwitch = () => {
-    if (onClick) {
-      onClick(!value);
-    }
-  };
-
   return (
     <div
       className={clsx(
@@ -16,7 +10,7 @@ const Toggle = ({ value, onClick }) => {
         "border border-secondary-accent transition-colors duration-300",
         value ? "bg-primary-highlight" : "bg-primary"
       )}
-      onClick={toggleSwitch}
+      onClick={onClick}
     >
       <motion.div
         className={clsx(

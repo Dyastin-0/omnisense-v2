@@ -6,14 +6,15 @@ import useToast from "./hooks/useToast";
 import useAuth from "../hooks/useAuth";
 import useModal from "./hooks/useModal";
 import DeviceModal from "./modals/DeviceModal";
+import { useEffect } from "react";
 
 const Device = ({ device }) => {
   const { setModal, setOpen } = useModal();
   const { toastInfo } = useToast();
   const { user, userDataPath } = useAuth();
 
-  const handleClick = (newState) => {
-    if (!device.enabled) {
+  const handleClick = (newState, enabled) => {
+    if (!enabled) {
       toastInfo(`${device.name} is disabled.`);
       return;
     }
@@ -32,7 +33,10 @@ const Device = ({ device }) => {
   return (
     <div className="flex text-xs gap-2 text-primary-foreground">
       <div className="flex w-full justify-between items-center">
-        <Toggle value={device.state} onClick={handleClick} />
+        <Toggle
+          value={device.state}
+          onClick={() => handleClick(!device.state, device.enabled)}
+        />
         <span>{device.name}</span>
       </div>
       <Button
@@ -40,12 +44,7 @@ const Device = ({ device }) => {
         icon={faEllipsisV}
         className="h-full p-0"
         onClick={() => {
-          setModal(
-            <DeviceModal
-              deviceName={device.name}
-              handleStateChange={handleClick}
-            />
-          );
+          setModal(<DeviceModal deviceName={device.name} />);
           setOpen(true);
         }}
       />
