@@ -7,17 +7,20 @@ import { SettingsProvider } from "./hooks/useSettings.jsx";
 import App from "./App.jsx";
 import "./index.css";
 import { DataProvider } from "./hooks/useData.jsx";
+import { ModalProvider } from "./components/hooks/useModal.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <ToastProvider>
-    <SettingsProvider>
-      <AuthProvider>
-        <DataProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </DataProvider>
-      </AuthProvider>
-    </SettingsProvider>
-  </ToastProvider>
+  <SettingsProvider>
+    <AuthProvider>
+      <DataProvider>
+        <ToastProvider>
+          <ModalProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ModalProvider>
+        </ToastProvider>
+      </DataProvider>
+    </AuthProvider>
+  </SettingsProvider>
 );

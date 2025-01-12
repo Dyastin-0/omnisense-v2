@@ -24,7 +24,7 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
-      <div className="fixed flex flex-col bottom-5 gap-3 left-[50%] transform -translate-x-1/2 z-40">
+      <div className="fixed flex flex-col bottom-5 gap-3 left-[50%] transform -translate-x-1/2 z-50">
         <AnimatePresence>
           {toasts.map((toast) => (
             <Toast

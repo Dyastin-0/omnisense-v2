@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useData } from "../hooks/useData";
+import useData from "../hooks/useData";
 import Log from "./Log";
 
 const Logs = () => {

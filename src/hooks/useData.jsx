@@ -13,7 +13,7 @@ import useSettings from "./useSettings";
 
 const DataContext = createContext();
 
-export const useData = () => useContext(DataContext);
+const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const { areInactiveDaysIncluded } = useSettings();
@@ -142,3 +142,5 @@ export const DataProvider = ({ children }) => {
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
+
+export default useData;
