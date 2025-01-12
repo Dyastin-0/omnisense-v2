@@ -14,7 +14,7 @@ const Logs = () => {
   }, [messages]);
 
   return (
-    <div className="w-full h-[calc(250px+1rem)] gap-2 p-2 bg-primary rounded-md">
+    <div className="flex flex-col w-full h-[calc(250px+1rem)] gap-2 p-2 bg-primary rounded-md">
       <h1 className="text-md text-center text-primary-foreground font-semibold">
         Logs
       </h1>

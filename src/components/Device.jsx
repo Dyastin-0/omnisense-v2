@@ -27,7 +27,7 @@ const Device = ({ device }) => {
   };
 
   return (
-    <div className="text-sm text-primary-foreground">
+    <div className="text-xs text-primary-foreground">
       <div className="flex justify-between items-center">
         <Toggle value={device.state} onClick={handleClick} />
         <span>{device?.name}</span>

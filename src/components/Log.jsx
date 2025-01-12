@@ -15,14 +15,14 @@ const Log = ({ log }) => {
   return (
     <div
       className={clsx(
-        "flex flex-col gap-1 text-sm text-primary-foreground",
+        "flex flex-col gap-1 text-xs text-primary-foreground",
         isSender && "text-right"
       )}
     >
       <span className="text-xs text-secondary-foreground">
         {`${sentBy} · ${dayjs.unix(timeSent / 1000).fromNow()}`}
       </span>
-      <span className="bg-secondary p-1 rounded-md">{message}</span>
+      <span className="bg-secondary p-2 rounded-md">{message}</span>
     </div>
   );
 };

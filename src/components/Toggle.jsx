@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
 const Toggle = ({ value, onClick }) => {
   const toggleSwitch = () => {
@@ -10,16 +11,20 @@ const Toggle = ({ value, onClick }) => {
 
   return (
     <div
-      className={`relative flex items-center w-11 h-6 rounded-full cursor-pointer
-        border border-secondary-accent transition-colors duration-300 ${
-          value ? "bg-primary-highlight" : "bg-transparent"
-        }`}
+      className={clsx(
+        "relative flex items-center w-12 h-6 rounded-full cursor-pointer",
+        "border border-secondary-accent transition-colors duration-300",
+        value ? "bg-primary-highlight" : "bg-primary"
+      )}
       onClick={toggleSwitch}
     >
       <motion.div
-        className="absolute w-5 h-5 bg-secondary-accent rounded-full"
+        className={clsx(
+          "absolute w-4 h-4 rounded-full",
+          value ? "bg-primary" : "bg-primary-highlight"
+        )}
         animate={{
-          x: value ? 20 : 2,
+          x: value ? 25 : 5,
         }}
         transition={{
           type: "spring",
