@@ -1,0 +1,15 @@
+[Unit]
+Description=Omnisense client V-2
+After=network.target multi-user.target
+
+[Service]
+User=ubuntu
+
+WorkingDirectory=/home/ubuntu/omnisense-v2
+ExecStart=/usr/bin/npm start
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=omnisenseclientv2
+
+[Install]
+WantedBy=multi-user.target
