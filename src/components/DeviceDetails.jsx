@@ -5,7 +5,11 @@ import Button from "./ui/Button";
 import Separator from "./ui/Separator";
 import useToast from "./hooks/useToast";
 import useData from "../hooks/useData";
-import { setDeviceState, setToggleState } from "../helpers/data-helper";
+import {
+  setDeviceState,
+  setSensorMode,
+  setToggleState,
+} from "../helpers/data-helper";
 import useAuth from "../hooks/useAuth";
 
 const DeviceDetails = ({ deviceName }) => {
@@ -23,11 +27,17 @@ const DeviceDetails = ({ deviceName }) => {
     }
   }, [devices, deviceName]);
 
-  const handleClick = (newState, enabled) => {
+  const handleClick = (newState, enabled, sensorMode) => {
     if (!enabled) {
       toastInfo(`${device.name} is disabled.`);
       return;
     }
+
+    if (sensorMode) {
+      toastInfo(`${device.name} is in sensor mode. It cannot be toggled.`);
+      return;
+    }
+
     const action = newState ? "on" : "off";
     const message = {
       actionType: "stateToggle",
@@ -40,15 +50,33 @@ const DeviceDetails = ({ deviceName }) => {
     setToggleState(userDataPath, device.name, newState, message);
   };
 
-  const handleDeviceStateChange = (newState) => {
+  const handleDeviceStateChange = (newState, sensorMode) => {
     if (device.state) {
       toastInfo(`${deviceName} is on, turn it off first.`);
       return;
     }
+
+    if (sensorMode) {
+      toastInfo(`${deviceName} is in sensor mode, turn it off first.`);
+      return;
+    }
+
     const action = newState ? "enabled" : "disabled";
 
     setDeviceState(userDataPath, device.name, newState);
     toastInfo(`${deviceName} ${action}.`);
+  };
+
+  const handleSensorModeChange = (newState, enabled) => {
+    if (!enabled) {
+      toastInfo(`${deviceName} is disabled.`);
+      return;
+    }
+
+    setSensorMode(userDataPath, device.name, newState);
+
+    const action = newState ? "enabled" : "disabled";
+    toastInfo(`${deviceName} sensor mode ${action}.`);
   };
 
   return (
@@ -66,16 +94,29 @@ const DeviceDetails = ({ deviceName }) => {
         <div className="flex flex-col items-center gap-2">
           <Toggle
             value={device?.enabled}
-            onClick={() => handleDeviceStateChange(!device.enabled)}
+            onClick={() =>
+              handleDeviceStateChange(!device.enabled, device.sensorMode)
+            }
           />
-          <h1 className="text-secondary-foreground">Toggle enable</h1>
+          <h1 className="text-secondary-foreground">Enable</h1>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <Toggle
+            value={device?.sensorMode}
+            onClick={() =>
+              handleSensorModeChange(!device.sensorMode, device.enabled)
+            }
+          />
+          <h1 className="text-secondary-foreground">Sensor mode</h1>
         </div>
         <div className="flex flex-col items-center gap-2">
           <Toggle
             value={device?.state}
-            onClick={() => handleClick(!device.state, device.enabled)}
+            onClick={() =>
+              handleClick(!device.state, device.enabled, device.sensorMode)
+            }
           />
-          <h1 className="text-secondary-foreground">Toggle state</h1>
+          <h1 className="text-secondary-foreground">State</h1>
         </div>
       </div>
       <Separator />

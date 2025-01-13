@@ -9,6 +9,10 @@ export const setToggleState = (userDataPath, name, state, message) => {
   updateData(`/${userDataPath}/messages`, { [message.timeSent]: message });
 };
 
+export const setSensorMode = (userDatapath, name, state) => {
+  setQuery(`${userDatapath}/devices`, "name", name, state, "sensorMode");
+};
+
 export const setDeviceName = async (userDataPath, name, newName) => {
   setQuery(`${userDataPath}/devices`, "name", name, newName, "name");
 };
