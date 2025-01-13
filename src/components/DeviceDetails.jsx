@@ -67,9 +67,14 @@ const DeviceDetails = ({ deviceName }) => {
     toastInfo(`${deviceName} ${action}.`);
   };
 
-  const handleSensorModeChange = (newState, enabled) => {
+  const handleSensorModeChange = (newState, enabled, sensor) => {
     if (!enabled) {
       toastInfo(`${deviceName} is disabled.`);
+      return;
+    }
+
+    if (!sensor) {
+      toastInfo(`${deviceName} has no sensor.`);
       return;
     }
 
@@ -104,7 +109,11 @@ const DeviceDetails = ({ deviceName }) => {
           <Toggle
             value={device?.sensorMode}
             onClick={() =>
-              handleSensorModeChange(!device.sensorMode, device.enabled)
+              handleSensorModeChange(
+                !device.sensorMode,
+                device.enabled,
+                device.sensor
+              )
             }
           />
           <h1 className="text-secondary-foreground">Sensor mode</h1>
