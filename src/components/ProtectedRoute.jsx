@@ -1,5 +1,6 @@
 import { Navigate, useLocation, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import SplashScreen from "./SplashScreen";
 
 const ProtectedRoute = () => {
   const { user, isLoading } = useAuth();
@@ -7,7 +8,7 @@ const ProtectedRoute = () => {
 
   if (location.pathname === "/*") return <Outlet />;
 
-  if (isLoading) return;
+  if (isLoading) return <SplashScreen />;
 
   return user ? (
     <Outlet />
