@@ -19,18 +19,13 @@ import DeviceEnable from "./DeviceEnable";
 import DeviceSensorMode from "./DeviceSensorMode";
 import DeviceState from "./DeviceState";
 import DeviceDetail from "./DeviceDetail";
+import useModal from "./hooks/useModal";
+import EditDeviceModal from "./modals/EditDeviceModal";
+import useDevice from "../hooks/useDevice";
 
 const DeviceDetails = ({ deviceName }) => {
-  const { devices } = useData();
-
-  const [device, setDevice] = useState(null);
-
-  useEffect(() => {
-    if (devices) {
-      const device = devices.find((device) => device.name === deviceName);
-      setDevice(device);
-    }
-  }, [devices, deviceName]);
+  const { setModal, setOpen } = useModal();
+  const device = useDevice({ deviceName });
 
   return (
     <div className="flex flex-col gap-2">
@@ -50,7 +45,15 @@ const DeviceDetails = ({ deviceName }) => {
       </div>
       <Separator />
       <div className="flex gap-2">
-        <Button text="Edit" icon={faEdit} className="flex-1" />
+        <Button
+          text="Edit"
+          icon={faEdit}
+          className="flex-1"
+          onClick={() => {
+            setModal(<EditDeviceModal deviceName={deviceName} />);
+            setOpen(true);
+          }}
+        />
         <Button text="Add Sensor" icon={faSatelliteDish} className="flex-1" />
       </div>
     </div>
