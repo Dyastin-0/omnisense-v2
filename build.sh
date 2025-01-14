@@ -19,6 +19,12 @@ copy_file() {
 
 copy_file ./$SERVICE_FILE $SERVICE_PATH
 
+echo "$APP: Pulling latest changes from git..."
+git pull
+
+echo "$APP: Installing dependencies..."
+npm install
+
 echo "$APP: Building the project..."
 
 npm run build
