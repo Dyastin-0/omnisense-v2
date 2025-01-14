@@ -17,8 +17,11 @@ const Toggle = ({ value, onClick }) => {
           "absolute w-4 h-4 rounded-full",
           value ? "bg-primary" : "bg-primary-highlight"
         )}
+        initial={{
+          x: value ? 26 : 4,
+        }}
         animate={{
-          x: value ? 25 : 5,
+          x: value ? 26 : 4,
         }}
         transition={{
           type: "spring",

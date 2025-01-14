@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faSatelliteDish,
+  faSignal,
+} from "@fortawesome/free-solid-svg-icons";
 import Toggle from "./Toggle";
 import Button from "./ui/Button";
 import Separator from "./ui/Separator";
@@ -14,6 +18,7 @@ import useAuth from "../hooks/useAuth";
 import DeviceEnable from "./DeviceEnable";
 import DeviceSensorMode from "./DeviceSensorMode";
 import DeviceState from "./DeviceState";
+import DeviceDetail from "./DeviceDetail";
 
 const DeviceDetails = ({ deviceName }) => {
   const { devices } = useData();
@@ -29,14 +34,14 @@ const DeviceDetails = ({ deviceName }) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="text-secondary-foreground">Name</h1>
-      <span>{device?.name}</span>
-      <h1 className="text-secondary-foreground">State</h1>
-      <span>{device?.state ? "On" : "Off"}</span>
-      <h1 className="text-secondary-foreground">Enabled</h1>
-      <span>{device?.enabled ? "True" : "False"}</span>
-      <h1 className="text-secondary-foreground">Sensor</h1>
-      <span>{device?.sensor?.name ? device?.sensor.name : "None"}</span>
+      <DeviceDetail name="Name" value={device?.name} />
+      <DeviceDetail name="State" value={device?.state ? "On" : "Off"} />
+      <DeviceDetail name="Pin" value={device?.pin} />
+      <DeviceDetail name="Sensor" value={device?.sensor?.name || "None"} />
+      <DeviceDetail
+        name={"Sensor Mode"}
+        value={device?.sensorMode ? "On" : "Off"}
+      />
       <Separator />
       <div className="flex gap-2">
         <DeviceEnable device={device} />
@@ -44,7 +49,10 @@ const DeviceDetails = ({ deviceName }) => {
         <DeviceState device={device} />
       </div>
       <Separator />
-      <Button text="Edit" icon={faEdit} />
+      <div className="flex gap-2">
+        <Button text="Edit" icon={faEdit} className="flex-1" />
+        <Button text="Add Sensor" icon={faSatelliteDish} className="flex-1" />
+      </div>
     </div>
   );
 };
