@@ -1,10 +1,10 @@
-import { sensors } from "../helpers/constants";
+import { SENSORS } from "../helpers/constants";
 import Checkbox from "./ui/Checkbox";
 
 const Sensors = ({ selectedSensor, setSelectedSensor, device }) => {
   return (
     <div className="flex gap-2">
-      {sensors.map((sensor) => (
+      {SENSORS.map((sensor) => (
         <Checkbox
           key={sensor}
           name={sensor}
