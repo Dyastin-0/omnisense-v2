@@ -62,3 +62,7 @@ export const cacheComputedData = (userPath, data) => {
 export const cacheComputedUptime = async (userPath, data) => {
   updateData(`${userPath}/cachedComputedUptime`, data);
 };
+
+export const updateDevice = async (userDataPath, data) => {
+  updateData(`${userDataPath}/devices`, data);
+};
