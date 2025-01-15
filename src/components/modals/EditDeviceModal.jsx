@@ -16,34 +16,35 @@ const EditDeviceModal = ({ deviceName: initialDeviceName, deviceId }) => {
   const { userDataPath } = useAuth();
   const [deviceName, setDeviceName] = useState(initialDeviceName);
   const device = useDevice({ deviceName });
-  const [localDevice, setLocalDevice] = useState(device);
-  const [name, setName] = useState("");
-  const [selectedSensor, setSelectedSensor] = useState(null);
-  const [selectedRelayPin, setSelectedRelayPin] = useState(null);
-  const [powerRating, setPowerRating] = useState("");
-  const [selectedSensorPin, setSelectedSensorPin] = useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    powerRating: "",
+    selectedSensor: null,
+    selectedRelayPin: null,
+    selectedSensorPin: null,
+  });
 
   useEffect(() => {
     if (device) {
-      setLocalDevice(device);
-      setName(device.name || "");
-      setSelectedSensor(device.sensor?.name || null);
-      setSelectedRelayPin(device.pin || null);
-      setPowerRating(device.powerRating || "");
-      setSelectedSensorPin(device.sensor?.pin || null);
+      setFormData({
+        name: device.name || "",
+        powerRating: device.powerRating || "",
+        selectedSensor: device.sensor?.name || null,
+        selectedRelayPin: device.pin || null,
+        selectedSensorPin: device.sensor?.pin || null,
+      });
     }
   }, [device]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { name, selectedRelayPin, selectedSensor, selectedSensorPin } =
+      formData;
 
     await updateDevice(userDataPath, deviceId, {
       pin: selectedRelayPin,
-      name: name,
-      sensor: {
-        name: selectedSensor,
-        pin: selectedSensorPin,
-      },
+      name,
+      sensor: { name: selectedSensor, pin: selectedSensorPin },
     });
 
     if (name !== deviceName) {
@@ -53,6 +54,10 @@ const EditDeviceModal = ({ deviceName: initialDeviceName, deviceId }) => {
     toastInfo("Device updated successfully.");
   };
 
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <GenericModal title={`Edit ${deviceName}`} className="h-fit">
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
@@ -60,35 +65,39 @@ const EditDeviceModal = ({ deviceName: initialDeviceName, deviceId }) => {
         <div className="flex flex-col gap-2">
           <NormalInput
             placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.currentTarget.value)}
+            value={formData.name}
+            onChange={(e) => handleChange("name", e.currentTarget.value)}
           />
           <NormalInput
             placeholder="Power rating"
-            value={powerRating}
-            onChange={(e) => setPowerRating(e.currentTarget.value)}
+            value={formData.powerRating}
+            onChange={(e) => handleChange("powerRating", e.currentTarget.value)}
           />
           <h1 className="text-xs text-secondary-foreground">Relay pin</h1>
           <RelayPins
-            selectedRelayPin={selectedRelayPin}
-            setSelectedRelayPin={setSelectedRelayPin}
-            device={localDevice}
+            selectedRelayPin={formData.selectedRelayPin}
+            setSelectedRelayPin={(pin) => handleChange("selectedRelayPin", pin)}
+            device={device}
           />
         </div>
-        {localDevice?.sensor && (
+        {device?.sensor && (
           <>
             <Separator />
             <h1 className="text-xs text-secondary-foreground">Sensor</h1>
             <Sensors
-              selectedSensor={selectedSensor}
-              setSelectedSensor={setSelectedSensor}
-              device={localDevice}
+              selectedSensor={formData.selectedSensor}
+              setSelectedSensor={(sensor) =>
+                handleChange("selectedSensor", sensor)
+              }
+              device={device}
             />
             <h1 className="text-xs text-secondary-foreground">Sensor pin</h1>
             <SensorPins
-              selectedSensorPin={selectedSensorPin}
-              setSelectedSensorPin={setSelectedSensorPin}
-              device={localDevice}
+              selectedSensorPin={formData.selectedSensorPin}
+              setSelectedSensorPin={(pin) =>
+                handleChange("selectedSensorPin", pin)
+              }
+              device={device}
             />
           </>
         )}
