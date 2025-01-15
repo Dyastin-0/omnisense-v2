@@ -17,7 +17,7 @@ const SensorPins = ({ setSelectedSensorPin, selectedSensorPin, device }) => {
             key={pin}
             name={pin}
             value={
-              selectedSensorPin
+              selectedSensorPin || selectedSensorPin == 0
                 ? selectedSensorPin == pin
                 : device?.sensor?.pin == pin
             }

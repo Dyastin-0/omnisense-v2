@@ -16,7 +16,9 @@ const RelayPins = ({ setSelectedRelayPin, selectedRelayPin, device }) => {
             key={pin}
             name={pin}
             value={
-              selectedRelayPin ? selectedRelayPin == pin : device?.pin == pin
+              selectedRelayPin || selectedRelayPin == 0
+                ? selectedRelayPin == pin
+                : device?.pin == pin
             }
             onChecked={(e) => {
               e.preventDefault();
