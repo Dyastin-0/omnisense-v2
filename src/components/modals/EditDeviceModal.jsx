@@ -14,6 +14,11 @@ const EditDeviceModal = ({ deviceName }) => {
   const [selectedRelayPin, setSelectedRelayPin] = useState(null);
   const [selectedSensorPin, setSelectedSensorPin] = useState(null);
 
+  const handleSave = (e) => {
+    e.preventDefault();
+    console.log("Save");
+  };
+
   return (
     <GenericModal title={`Edit ${deviceName}`} className="h-fit">
       <form className="flex flex-col gap-2">
@@ -28,19 +33,23 @@ const EditDeviceModal = ({ deviceName }) => {
             device={device}
           />
         </div>
-        <Separator />
-        <h1 className="text-xs text-secondary-foreground">Sensor</h1>
-        <Sensors
-          selectedSensor={selectedSensor}
-          setSelectedSensor={setSelectedSensor}
-          device={device}
-        />
-        <h1 className="text-xs text-secondary-foreground">Sensor pin</h1>
-        <SensorPins
-          selectedSensorPin={selectedSensorPin}
-          setSelectedSensorPin={setSelectedSensorPin}
-          device={device}
-        />
+        {device?.sensor && (
+          <>
+            <Separator />
+            <h1 className="text-xs text-secondary-foreground">Sensor</h1>
+            <Sensors
+              selectedSensor={selectedSensor}
+              setSelectedSensor={setSelectedSensor}
+              device={device}
+            />
+            <h1 className="text-xs text-secondary-foreground">Sensor pin</h1>
+            <SensorPins
+              selectedSensorPin={selectedSensorPin}
+              setSelectedSensorPin={setSelectedSensorPin}
+              device={device}
+            />
+          </>
+        )}
         <Separator />
         <Button type="submit" text="Save" />
       </form>
