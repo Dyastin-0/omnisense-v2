@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 const NormalInput = forwardRef(
-  ({ type = "text", placeholder, onBlur, onChange, className }, ref) => {
+  ({ type = "text", placeholder, onBlur, onChange, className, value }, ref) => {
     return (
       <input
         ref={ref}
@@ -9,6 +9,7 @@ const NormalInput = forwardRef(
         placeholder={placeholder}
         onBlur={onBlur}
         onChange={onChange}
+        value={value}
         className={`w-full p-2 rounded-md bg-secondary placeholder:text-secondary-foreground
         outline-none transition-all duration-300
         hover:shadow-[var(--accent-secondary)_0_0_0_2px] focus:shadow-[var(--accent-secondary)_0_0_0_2px]

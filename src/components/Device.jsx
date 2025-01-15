@@ -6,7 +6,6 @@ import useToast from "./hooks/useToast";
 import useAuth from "../hooks/useAuth";
 import useModal from "./hooks/useModal";
 import DeviceModal from "./modals/DeviceModal";
-import { useEffect } from "react";
 
 const Device = ({ device }) => {
   const { setModal, setOpen } = useModal();
@@ -44,7 +43,9 @@ const Device = ({ device }) => {
         icon={faEllipsisV}
         className="h-full p-0"
         onClick={() => {
-          setModal(<DeviceModal deviceName={device.name} />);
+          setModal(
+            <DeviceModal deviceName={device.name} deviceId={device.id} />
+          );
           setOpen(true);
         }}
       />

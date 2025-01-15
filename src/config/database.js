@@ -29,7 +29,6 @@ export async function getData(dataPath) {
   const dataRef = ref(db, dataPath);
   const snapShot = await get(dataRef);
   const data = await snapShot.val();
-  console.log(data);
   return data;
 }
 

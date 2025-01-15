@@ -11,7 +11,9 @@ const Devices = () => {
       </h1>
       <div className="flex flex-col gap-2 p-2 overflow-y-auto scrollbar-thin scrollbar-thumb-primary-highlight">
         {devices &&
-          devices.map((device) => <Device key={device.name} device={device} />)}
+          devices.map((device, index) => (
+            <Device key={index} device={device} />
+          ))}
       </div>
     </div>
   );

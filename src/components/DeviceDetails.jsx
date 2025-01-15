@@ -23,7 +23,7 @@ import useModal from "./hooks/useModal";
 import EditDeviceModal from "./modals/EditDeviceModal";
 import useDevice from "../hooks/useDevice";
 
-const DeviceDetails = ({ deviceName }) => {
+const DeviceDetails = ({ deviceName, deviceId }) => {
   const { setModal, setOpen } = useModal();
   const device = useDevice({ deviceName });
 
@@ -50,7 +50,9 @@ const DeviceDetails = ({ deviceName }) => {
           icon={faEdit}
           className="flex-1"
           onClick={() => {
-            setModal(<EditDeviceModal deviceName={deviceName} />);
+            setModal(
+              <EditDeviceModal deviceName={deviceName} deviceId={deviceId} />
+            );
             setOpen(true);
           }}
         />

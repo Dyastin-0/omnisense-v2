@@ -48,7 +48,13 @@ export const DataProvider = ({ children }) => {
       const devicesRef = ref(db, `/${userDataPath}/devices`);
 
       onValue(devicesRef, (snapshot) => {
-        setDevices(snapshot.val() || []);
+        const devices = Object.entries(snapshot.val() || {}).map(
+          ([key, value]) => ({
+            id: key,
+            ...value,
+          })
+        );
+        setDevices(devices);
       });
 
       const messagesRef = ref(db, `/${userDataPath}/messages`);

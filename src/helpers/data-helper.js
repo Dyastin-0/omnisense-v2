@@ -51,7 +51,6 @@ export const addDevice = async (
 };
 
 export const addInstance = async (userPath, deviceName) => {
-  console.log(userPath, deviceName);
   await pushInArray(`/${userPath}/instances`, deviceName);
 };
 
@@ -63,6 +62,6 @@ export const cacheComputedUptime = async (userPath, data) => {
   updateData(`${userPath}/cachedComputedUptime`, data);
 };
 
-export const updateDevice = async (userDataPath, data) => {
-  updateData(`${userDataPath}/devices`, data);
+export const updateDevice = async (userDataPath, deviceName, data) => {
+  updateData(`${userDataPath}/devices/${deviceName}`, data);
 };
