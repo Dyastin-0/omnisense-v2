@@ -17,6 +17,12 @@ const Device = ({ device }) => {
       toastInfo(`${device.name} is disabled.`);
       return;
     }
+
+    if (device?.sensorMode) {
+      toastInfo(`${device.name} is in sensor mode. It cannot be toggled.`);
+      return;
+    }
+
     const action = newState ? "on" : "off";
     const message = {
       actionType: "stateToggle",
