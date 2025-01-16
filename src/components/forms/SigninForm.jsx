@@ -43,7 +43,9 @@ const SigninForm = () => {
       className="flex flex-col w-[250px] gap-2 p-4 max-w-full text-primary-foreground rounded-md border border-secondary-accent
         text-xs"
     >
-      <Omnisense />
+      <span className="text-lg">
+        <Omnisense />
+      </span>
       <Input
         type="text"
         onChange={(e) => setEmail(e.currentTarget.value)}
