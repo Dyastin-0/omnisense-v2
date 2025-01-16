@@ -32,7 +32,7 @@ const Button = ({
         `flex h-fit items-center gap-1 ${
           end ? "justify-end" : "justify-center"
         } text-xs transition-all outline-none duration-300`,
-        "border border-transparent hover:border-secondary-accent focus:border-secondary-accent",
+        "active:shadow-[var(--highlight)_0_0_0_2px] hover:shadow-[var(--accent-secondary)_0_0_0_2px] focus:shadow-[var(--accent-secondary)_0_0_0_2px]",
         variants[variant],
         className
       )}
