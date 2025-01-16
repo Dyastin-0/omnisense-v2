@@ -97,7 +97,7 @@ const AddDeviceModal = () => {
           value={formData.powerRating}
           onChange={(e) => handleChange("powerRating", e.currentTarget.value)}
         />
-        <h1 className="text-xs text-secondary-foreground">Relay pin</h1>
+        <h1 className="text-xs text-secondary-foreground">Relay Pin</h1>
         <RelayPins
           selectedRelayPin={formData.selectedRelayPin}
           setSelectedRelayPin={(pin) => handleChange("selectedRelayPin", pin)}
@@ -108,7 +108,7 @@ const AddDeviceModal = () => {
           selectedSensor={formData.selectedSensor}
           setSelectedSensor={(sensor) => handleChange("selectedSensor", sensor)}
         />
-        <h1 className="text-xs text-secondary-foreground">Sensor pin</h1>
+        <h1 className="text-xs text-secondary-foreground">Sensor Pin</h1>
         <SensorPins
           selectedSensorPin={formData.selectedSensorPin}
           selectedSensor={formData.selectedSensor}

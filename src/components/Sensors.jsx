@@ -1,7 +1,12 @@
 import { SENSORS } from "../helpers/constants";
 import Checkbox from "./ui/Checkbox";
 
-const Sensors = ({ selectedSensor, setSelectedSensor, device }) => {
+const Sensors = ({
+  selectedSensor,
+  setSelectedSensor,
+  setSelectedSensorPin,
+  device,
+}) => {
   return (
     <div className="flex gap-2">
       {SENSORS.map((sensor) => (
@@ -11,11 +16,15 @@ const Sensors = ({ selectedSensor, setSelectedSensor, device }) => {
           value={
             selectedSensor
               ? selectedSensor == sensor
-              : device?.sensor?.name == sensor
+              : device?.sensor?.name == sensor && !selectedSensor == sensor
           }
           onChecked={(e) => {
             e.preventDefault();
-            setSelectedSensor(selectedSensor == sensor ? null : sensor);
+            const newsensor = selectedSensor == sensor ? null : sensor;
+            setSelectedSensor(newsensor);
+            if (!newsensor) {
+              setSelectedSensorPin(null);
+            }
           }}
         />
       ))}

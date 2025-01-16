@@ -1,20 +1,6 @@
-import { useEffect, useState } from "react";
-import {
-  faEdit,
-  faSatelliteDish,
-  faSignal,
-} from "@fortawesome/free-solid-svg-icons";
-import Toggle from "./Toggle";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Button from "./ui/Button";
 import Separator from "./ui/Separator";
-import useToast from "./hooks/useToast";
-import useData from "../hooks/useData";
-import {
-  setDeviceState,
-  setSensorMode,
-  setToggleState,
-} from "../helpers/data-helper";
-import useAuth from "../hooks/useAuth";
 import DeviceEnable from "./DeviceEnable";
 import DeviceSensorMode from "./DeviceSensorMode";
 import DeviceState from "./DeviceState";
@@ -32,15 +18,22 @@ const DeviceDetails = ({ deviceName, deviceId }) => {
       <DeviceDetail name="Name" value={device?.name} />
       <DeviceDetail name="State" value={device?.state ? "On" : "Off"} />
       <DeviceDetail name="Pin" value={device?.pin} />
-      <DeviceDetail name="Sensor" value={device?.sensor?.name || "None"} />
-      <DeviceDetail
-        name={"Sensor Mode"}
-        value={device?.sensorMode ? "On" : "Off"}
-      />
+      <DeviceDetail name="Power Rating" value={device?.powerRating} />
+      {device?.sensor?.name && (
+        <>
+          <Separator />
+          <DeviceDetail name="Sensor" value={device?.sensor?.name || "None"} />
+          <DeviceDetail name="Sensor Pin" value={device?.sensor?.pin} />
+          <DeviceDetail
+            name={"Sensor Mode"}
+            value={device?.sensorMode ? "On" : "Off"}
+          />
+        </>
+      )}
       <Separator />
       <div className="flex gap-2">
         <DeviceEnable device={device} />
-        <DeviceSensorMode device={device} />
+        {device?.sensor?.name && <DeviceSensorMode device={device} />}
         <DeviceState device={device} />
       </div>
       <Separator />
@@ -56,7 +49,6 @@ const DeviceDetails = ({ deviceName, deviceId }) => {
             setOpen(true);
           }}
         />
-        <Button text="Add Sensor" icon={faSatelliteDish} className="flex-1" />
       </div>
     </div>
   );

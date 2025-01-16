@@ -24,7 +24,7 @@ const SensorPins = ({
           value={
             selectedSensorPin || selectedSensorPin == 0
               ? selectedSensorPin == pin
-              : device?.sensor?.pin == pin
+              : device?.sensor?.pin == pin && !selectedSensorPin == pin
           }
           onChecked={(e) => {
             e.preventDefault();

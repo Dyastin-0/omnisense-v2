@@ -41,9 +41,25 @@ const EditDeviceModal = ({ deviceName: initialDeviceName, deviceId }) => {
     const { name, selectedRelayPin, selectedSensor, selectedSensorPin } =
       formData;
 
+    if (selectedSensor && !(selectedSensorPin || selectedSensorPin == 0)) {
+      toastInfo("Select a sensor pin.");
+      return;
+    }
+
+    if (isNaN(formData.powerRating)) {
+      toastInfo("Power rating must be a number.");
+      return;
+    }
+
+    if (formData.powerRating < 0) {
+      toastInfo("Power rating must be a positive number.");
+      return;
+    }
+
     await updateDevice(userDataPath, deviceId, {
       pin: selectedRelayPin,
       name,
+      powerRating: parseInt(formData.powerRating),
       sensor: { name: selectedSensor, pin: selectedSensorPin },
     });
 
@@ -73,34 +89,28 @@ const EditDeviceModal = ({ deviceName: initialDeviceName, deviceId }) => {
             value={formData.powerRating}
             onChange={(e) => handleChange("powerRating", e.currentTarget.value)}
           />
-          <h1 className="text-xs text-secondary-foreground">Relay pin</h1>
+          <h1 className="text-xs text-secondary-foreground">Relay Pin</h1>
           <RelayPins
             selectedRelayPin={formData.selectedRelayPin}
             setSelectedRelayPin={(pin) => handleChange("selectedRelayPin", pin)}
             device={device}
           />
         </div>
-        {device?.sensor && (
-          <>
-            <Separator />
-            <h1 className="text-xs text-secondary-foreground">Sensor</h1>
-            <Sensors
-              selectedSensor={formData.selectedSensor}
-              setSelectedSensor={(sensor) =>
-                handleChange("selectedSensor", sensor)
-              }
-              device={device}
-            />
-            <h1 className="text-xs text-secondary-foreground">Sensor pin</h1>
-            <SensorPins
-              selectedSensorPin={formData.selectedSensorPin}
-              setSelectedSensorPin={(pin) =>
-                handleChange("selectedSensorPin", pin)
-              }
-              device={device}
-            />
-          </>
-        )}
+        <Separator />
+        <h1 className="text-xs text-secondary-foreground">Sensor</h1>
+        <Sensors
+          selectedSensor={formData.selectedSensor}
+          setSelectedSensor={(sensor) => handleChange("selectedSensor", sensor)}
+          setSelectedSensorPin={(pin) => handleChange("selectedSensorPin", pin)}
+          device={device}
+        />
+        <h1 className="text-xs text-secondary-foreground">Sensor Pin</h1>
+        <SensorPins
+          selectedSensorPin={formData.selectedSensorPin}
+          selectedSensor={formData.selectedSensor}
+          setSelectedSensorPin={(pin) => handleChange("selectedSensorPin", pin)}
+          device={device}
+        />
         <Separator />
         <Button type="submit" text="Save" />
       </form>
