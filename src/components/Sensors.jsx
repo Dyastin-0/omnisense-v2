@@ -15,7 +15,7 @@ const Sensors = ({ selectedSensor, setSelectedSensor, device }) => {
           }
           onChecked={(e) => {
             e.preventDefault();
-            setSelectedSensor(sensor);
+            setSelectedSensor(selectedSensor == sensor ? null : sensor);
           }}
         />
       ))}

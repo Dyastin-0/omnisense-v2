@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faGear,
+  faPlus,
   faSignOut,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,11 +21,14 @@ import Omnisense from "./Omnisense";
 import useViewport from "../hooks/useViewport";
 import Tooltip from "./ui/Tooltip";
 import { logOut } from "../config/auth";
+import useModal from "./hooks/useModal";
+import AddDeviceModal from "./modals/AddDeviceModal";
 
 const Navbar = ({ toggleSideNavbar }) => {
   const { toggleTheme, icon } = useThemeToggle();
   const { user, reset } = useAuth();
   const { viewWidth } = useViewport();
+  const { setModal, setOpen } = useModal();
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -79,6 +83,17 @@ const Navbar = ({ toggleSideNavbar }) => {
           ))}
       </div>
       <div className="flex w-fit gap-2 justify-center items-center">
+        {user && (
+          <Button
+            text="Add device"
+            icon={faPlus}
+            className="text-nowrap font-semibold"
+            onClick={() => {
+              setModal(<AddDeviceModal />);
+              setOpen(true);
+            }}
+          />
+        )}
         <Tooltip text="Toggle theme">
           <Button
             variant="default_rounded"

@@ -20,7 +20,7 @@ const RelayPins = ({ setSelectedRelayPin, selectedRelayPin, device }) => {
           }
           onChecked={(e) => {
             e.preventDefault();
-            setSelectedRelayPin(pin);
+            setSelectedRelayPin(selectedRelayPin == pin ? null : pin);
           }}
         />
       ))}

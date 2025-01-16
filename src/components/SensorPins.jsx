@@ -1,9 +1,16 @@
 import { GPIO_PINS } from "../helpers/constants";
 import useData from "../hooks/useData";
+import useToast from "./hooks/useToast";
 import Checkbox from "./ui/Checkbox";
 
-const SensorPins = ({ setSelectedSensorPin, selectedSensorPin, device }) => {
+const SensorPins = ({
+  setSelectedSensorPin,
+  selectedSensorPin,
+  selectedSensor,
+  device,
+}) => {
   const { devices } = useData();
+  const { toastInfo } = useToast();
 
   return (
     <div className="flex gap-2 flex-wrap">
@@ -21,7 +28,11 @@ const SensorPins = ({ setSelectedSensorPin, selectedSensorPin, device }) => {
           }
           onChecked={(e) => {
             e.preventDefault();
-            setSelectedSensorPin(pin);
+            if (!selectedSensor) {
+              toastInfo("Select a sensor first.");
+              return;
+            }
+            setSelectedSensorPin(selectedSensorPin == pin ? null : pin);
           }}
         />
       ))}
