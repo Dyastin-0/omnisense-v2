@@ -20,9 +20,6 @@ export default defineConfig({
             if (id.includes("framer-motion")) {
               return "framer-motion";
             }
-            if (id.includes("popmotion")) {
-              return "popmotion";
-            }
             if (id.includes("recharts")) {
               return "recharts";
             }
