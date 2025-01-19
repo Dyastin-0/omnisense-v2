@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")).render(
       <DataProvider>
         <ToastProvider>
           <ModalProvider>
-            <BrowserRouter basename="/v2">
+            <BrowserRouter>
               <App />
             </BrowserRouter>
           </ModalProvider>
