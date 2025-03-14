@@ -1,4 +1,4 @@
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Button from "./ui/Button";
 import Separator from "./ui/Separator";
 import DeviceEnable from "./DeviceEnable";
@@ -8,6 +8,7 @@ import DeviceDetail from "./DeviceDetail";
 import useModal from "./hooks/useModal";
 import EditDeviceModal from "./modals/EditDeviceModal";
 import useDevice from "../hooks/useDevice";
+import { ScheduleDeviceModal } from "./modals/ScheduleDeviceModal";
 
 const DeviceDetails = ({ deviceName, deviceId }) => {
   const { setModal, setOpen } = useModal();
@@ -45,6 +46,14 @@ const DeviceDetails = ({ deviceName, deviceId }) => {
           onClick={() => {
             setModal(
               <EditDeviceModal deviceName={deviceName} deviceId={deviceId} />
+            );
+            setOpen(true);
+          }}
+        />
+        <Button text="Schedule" icon={faClock} className="flex-1"
+          onClick={() => {
+            setModal(
+              <ScheduleDeviceModal initialSchedule={device?.schedule} deviceName={deviceName} deviceId={deviceId} />
             );
             setOpen(true);
           }}
