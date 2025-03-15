@@ -4,6 +4,7 @@ import Separator from "./ui/Separator";
 import DeviceEnable from "./DeviceEnable";
 import DeviceSensorMode from "./DeviceSensorMode";
 import DeviceState from "./DeviceState";
+import DeviceScheduleMode from "./DeviceScheduleMode";
 import DeviceDetail from "./DeviceDetail";
 import useModal from "./hooks/useModal";
 import EditDeviceModal from "./modals/EditDeviceModal";
@@ -33,9 +34,10 @@ const DeviceDetails = ({ deviceName, deviceId }) => {
       )}
       <Separator />
       <div className="flex gap-2">
-        <DeviceEnable device={device} />
-        {device?.sensor?.name && <DeviceSensorMode device={device} />}
-        <DeviceState device={device} />
+        <DeviceEnable device={device} deviceId={deviceId} />
+        {device?.sensor?.name && <DeviceSensorMode device={device} deviceId={deviceId} />}
+        {device?.schedule && <DeviceScheduleMode device={device} deviceId={deviceId} />}
+        <DeviceState device={device} deviceId={deviceId} />
       </div>
       <Separator />
       <div className="flex gap-2">

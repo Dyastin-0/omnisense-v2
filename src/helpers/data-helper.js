@@ -1,45 +1,43 @@
-import { setQuery, pushInArray, updateData } from "../config/database";
+import { pushInArray, updateData } from "../config/database";
 
-export const setDeviceState = (userDataPath, name, enabled) => {
-  setQuery(`${userDataPath}/devices`, "name", name, enabled, "enabled");
+export const setDeviceState = (userDataPath, id, enabled) => {
+  updateData(`/${userDataPath}/devices/${id}`, { enabled: enabled });
 };
 
-export const setToggleState = (userDataPath, name, state, message) => {
-  setQuery(`/${userDataPath}/devices`, "name", name, state, "state");
+export const setToggleState = (userDataPath, id, state, message) => {
+  updateData(`/${userDataPath}/devices/${id}`, { state: state });
   updateData(`/${userDataPath}/messages`, { [message.timeSent]: message });
 };
 
-export const setSensorMode = (userDatapath, name, state) => {
-  setQuery(`${userDatapath}/devices`, "name", name, state, "sensorMode");
+export const setSensorMode = (userDataPath, id, state) => {
+  updateData(`/${userDataPath}/devices/${id}`, { sensorMode: state });
 };
 
-export const setDeviceName = async (userDataPath, name, newName) => {
-  setQuery(`${userDataPath}/devices`, "name", name, newName, "name");
+export const setScheduleMode = (userDataPath, id, state) => {
+  updateData(`/${userDataPath}/devices/${id}`, { scheduleMode: state });
 };
 
-export const setPowerRating = async (userDataPath, name, newPowerRating) => {
-  setQuery(
-    `${userDataPath}/devices`,
-    "name",
-    name,
-    newPowerRating,
-    "powerRating"
-  );
+export const setDeviceName = async (userDataPath, id, newName) => {
+  updateData(`/${userDataPath}/devices/${id}`, { name: newName });
 };
 
-export const setDevicePin = async (userDataPath, name, newPin) => {
-  setQuery(`${userDataPath}/devices`, "name", name, newPin, "pin");
+export const setPowerRating = async (userDataPath, id, newPowerRating) => {
+  updateData(`/${userDataPath}/devices/${id}`, { powerRating: newPowerRating });
 };
 
-export const setDeviceSensor = async (userDataPath, name, sensor) => {
-  setQuery(`${userDataPath}/devices`, "name", name, sensor, "sensor");
+export const setDevicePin = async (userDataPath, id, newPin) => {
+  updateData(`/${userDataPath}/devices/${id}`, { pin: newPin });
+};
+
+export const setDeviceSensor = async (userDataPath, id, sensor) => {
+  updateData(`/${userDataPath}/devices/${id}`, { sensor: sensor });
 };
 
 export const addDevice = async (
   userDataPath,
   deviceName,
   powerRating,
-  devicePin
+  devicePin,
 ) => {
   await pushInArray(`/${userDataPath}/devices`, {
     name: deviceName,

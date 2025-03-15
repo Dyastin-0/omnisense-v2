@@ -1,4 +1,5 @@
-import { setSensorMode } from "../helpers/data-helper";
+
+import { setScheduleMode } from "../helpers/data-helper";
 import useAuth from "../hooks/useAuth";
 import useToast from "./hooks/useToast";
 import Toggle from "./Toggle";
@@ -7,42 +8,42 @@ const DeviceSensorMode = ({ deviceId, device }) => {
   const { userDataPath } = useAuth();
   const { toastInfo } = useToast();
 
-  const handleSensorModeToggle = (newState, enabled, sensor, scheduleMode) => {
+  const handleSensorModeToggle = (newState, enabled, schedule, sensorMode) => {
     if (!enabled) {
       toastInfo(`${device.name} is disabled.`);
       return;
     }
 
-    if (!sensor) {
-      toastInfo(`${device.name} has no sensor.`);
+    if (!schedule) {
+      toastInfo(`${device.name} has no schedule.`);
       return;
     }
 
-    if (scheduleMode) {
-      toastInfo("Can't be in sensor and scheduel mode at the same time.");
+    if (sensorMode) {
+      toastInfo("Device can't be in schedule and sensor mode at the same time.");
       return;
     }
 
-    setSensorMode(userDataPath, deviceId, newState);
+    setScheduleMode(userDataPath, deviceId, newState);
 
     const action = newState ? "enabled" : "disabled";
-    toastInfo(`${device.name} sensor mode ${action}.`);
+    toastInfo(`${device.name} schedule mode ${action}.`);
   };
 
   return (
     <div className="flex flex-col items-center gap-2">
       <Toggle
-        value={device?.sensorMode}
+        value={device?.scheduleMode}
         onClick={() =>
           handleSensorModeToggle(
-            !device.sensorMode,
+            !device.scheduleMode,
             device.enabled,
-            device.sensor,
-            device.scheduleMode
+            device.schedule,
+            device.sensorMode
           )
         }
       />
-      <h1 className="text-secondary-foreground">Sensor mode</h1>
+      <h1 className="text-secondary-foreground">Schedule mode</h1>
     </div>
   );
 };

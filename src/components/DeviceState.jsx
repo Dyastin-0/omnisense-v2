@@ -3,11 +3,11 @@ import useAuth from "../hooks/useAuth";
 import useToast from "./hooks/useToast";
 import Toggle from "./Toggle";
 
-const DeviceState = ({ device }) => {
+const DeviceState = ({ deviceId, device }) => {
   const { user, userDataPath } = useAuth();
   const { toastInfo } = useToast();
 
-  const handleDeviceStateToggle = (newState, enabled, sensorMode) => {
+  const handleDeviceStateToggle = (newState, enabled, sensorMode, scheduleMode) => {
     if (!enabled) {
       toastInfo(`${device.name} is disabled.`);
       return;
@@ -15,6 +15,11 @@ const DeviceState = ({ device }) => {
 
     if (sensorMode) {
       toastInfo(`${device.name} is in sensor mode. It cannot be toggled.`);
+      return;
+    }
+
+    if (scheduleMode) {
+      toastInfo(`${device.name} is in schedule mode. It cannot be toggled.`);
       return;
     }
 
@@ -27,7 +32,7 @@ const DeviceState = ({ device }) => {
       message: `turned ${action} the ${device.name}.`,
       timeSent: new Date().getTime(),
     };
-    setToggleState(userDataPath, device.name, newState, message);
+    setToggleState(userDataPath, deviceId, newState, message);
   };
 
   return (
@@ -38,7 +43,8 @@ const DeviceState = ({ device }) => {
           handleDeviceStateToggle(
             !device.state,
             device.enabled,
-            device.sensorMode
+            device.sensorMode,
+            device.scheduleMode
           )
         }
       />

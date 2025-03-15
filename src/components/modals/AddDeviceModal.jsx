@@ -73,6 +73,10 @@ const AddDeviceModal = () => {
       name,
       powerRating,
       pin: selectedRelayPin,
+      state: false,
+      enabled: false,
+      sensorMode: false,
+      scheduleMode: false,
       sensor: { name: selectedSensor, pin: selectedSensorPin },
     });
 

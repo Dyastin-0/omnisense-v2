@@ -65,7 +65,7 @@ export async function arrayIncludes(dataPath, data) {
   return toggles.some((item) => item.name.includes(data));
 }
 
-export async function setQuery(userDataPath, name, key, newData, target) {
+async function setQuery(userDataPath, name, key, newData, target) {
   const dataRef = ref(db, userDataPath);
   const queryRef = query(dataRef, orderByChild(name), equalTo(key));
 

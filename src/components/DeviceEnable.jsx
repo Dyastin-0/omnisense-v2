@@ -3,22 +3,26 @@ import useAuth from "../hooks/useAuth";
 import useToast from "./hooks/useToast";
 import Toggle from "./Toggle";
 
-const DeviceEnable = ({ device }) => {
+const DeviceEnable = ({ deviceId, device }) => {
   const { userDataPath } = useAuth();
   const { toastInfo } = useToast();
 
-  const handleEnableToggle = (newState, sensorMode) => {
+  const handleEnableToggle = (newState, sensorMode, scheduleMode) => {
     if (device.state) {
-      toastInfo(`${device.name} is on, turn it off first.`);
+      toastInfo(`${device.name} is on, disable it first.`);
       return;
     }
 
     if (sensorMode) {
-      toastInfo(`${device.name} is in sensor mode, turn it off first.`);
+      toastInfo(`${device.name} is in sensor mode, disable it first.`);
       return;
     }
 
-    setDeviceState(userDataPath, device.name, newState);
+    if (scheduleMode) {
+      toastInfo(`${device.name} is in schedule mode, disable it first.`);
+    }
+
+    setDeviceState(userDataPath, deviceId, newState);
 
     const action = newState ? "enabled" : "disabled";
     toastInfo(`${device.name} ${action}.`);
@@ -28,7 +32,7 @@ const DeviceEnable = ({ device }) => {
     <div className="flex flex-col items-center gap-2">
       <Toggle
         value={device?.enabled}
-        onClick={() => handleEnableToggle(!device.enabled, device.sensorMode)}
+        onClick={() => handleEnableToggle(!device.enabled, device.sensorMode, device.sensorMode)}
       />
       <h1 className="text-secondary-foreground">Enable</h1>
     </div>
