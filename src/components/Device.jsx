@@ -32,7 +32,7 @@ const Device = ({ device }) => {
       message: `turned ${action} the ${device.name}.`,
       timeSent: new Date().getTime(),
     };
-    setToggleState(userDataPath, device.name, newState, message);
+    setToggleState(userDataPath, device.id, newState, message);
   };
 
   return (
