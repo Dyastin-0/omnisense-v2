@@ -13,9 +13,9 @@ export const ScheduleDevice = ({ initialSchedule, deviceName, deviceId }) => {
   const { toastInfo } = useToast();
   const { userDataPath } = useAuth();
 
-  const [selectedDays, setSelectedDays] = useState(initialSchedule.days || []);
+  const [selectedDays, setSelectedDays] = useState(initialSchedule?.days || []);
   const [selectedFromTime, setSelectedFromTime] = useState(parseTimeString(initialSchedule?.from) || { hours: 7, minutes: 30, period: "AM" });
-  const [selectedToTime, setSelectedToTime] = useState(parseTimeString(initialSchedule.to) || { hours: 5, minutes: 30, period: "PM" });
+  const [selectedToTime, setSelectedToTime] = useState(parseTimeString(initialSchedule?.to) || { hours: 5, minutes: 30, period: "PM" });
 
   const handleSetSchedule = async (e) => {
     e.preventDefault();

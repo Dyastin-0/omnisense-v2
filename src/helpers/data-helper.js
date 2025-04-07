@@ -49,7 +49,7 @@ export const addDevice = async (
 };
 
 export const addInstance = async (userPath, deviceName) => {
-  await pushInArray(`/${userPath}/instances`, deviceName);
+  pushInArray(`/${userPath}/instances`, deviceName);
 };
 
 export const cacheComputedData = (userPath, data) => {

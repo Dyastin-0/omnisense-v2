@@ -23,6 +23,7 @@ import Tooltip from "./ui/Tooltip";
 import { logOut } from "../config/auth";
 import useModal from "./hooks/useModal";
 import AddDeviceModal from "./modals/AddDeviceModal";
+import SelectInstanceModal from "./modals/SelectInstanceModal";
 
 const Navbar = ({ toggleSideNavbar }) => {
   const { toggleTheme, icon } = useThemeToggle();
@@ -84,15 +85,25 @@ const Navbar = ({ toggleSideNavbar }) => {
       </div>
       <div className="flex w-fit gap-2 justify-center items-center">
         {user && (
-          <Button
-            text="Add device"
-            icon={faPlus}
-            className="text-nowrap font-semibold"
-            onClick={() => {
-              setModal(<AddDeviceModal />);
-              setOpen(true);
-            }}
-          />
+          <>
+            <Button
+              text="Add device"
+              icon={faPlus}
+              className="text-nowrap font-semibold"
+              onClick={() => {
+                setModal(<AddDeviceModal />);
+                setOpen(true);
+              }}
+            />
+            <Button
+              text="Select instance"
+              className="text-nowrap font-semibold"
+              onClick={() => {
+                setModal(<SelectInstanceModal />);
+                setOpen(true);
+              }}
+            />
+          </>
         )}
         <Tooltip text="Toggle theme">
           <Button

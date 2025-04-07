@@ -2,6 +2,8 @@ export const hasSpecialCharacters = (str) => /[^a-zA-Z0-9\s()]/.test(str);
 
 // match HH:MM AM/PM
 export function parseTimeString(timeString) {
+  if (!timeString) return;
+
   const timeRegex = /^(\d{1,2}):(\d{2})\s?(AM|PM)$/i;
 
   const match = timeString.match(timeRegex);
