@@ -24,14 +24,6 @@ export const ScheduleDevice = ({ initialSchedule, deviceName, deviceId }) => {
       return;
     }
 
-    if (selectedFromTime.minutes < 10) {
-      selectedFromTime.minutes = "0" + String(selectedFromTime.minutes)
-    }
-
-    if (selectedToTime.minutes < 10) {
-      selectedToTime.minutes = "0" + String(selectedToTime.minutes)
-    }
-
     await updateDevice(userDataPath, deviceId, {
       schedule: {
         days: selectedDays,

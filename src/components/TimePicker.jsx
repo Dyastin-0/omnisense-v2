@@ -16,8 +16,8 @@ const TimePicker = ({
         newTime.hours = newValue > 12 ? 1 : newValue;
         break;
       case 'minutes':
-        newValue = selectedTime.minutes + 1;
-        newTime.minutes = newValue > 59 ? 0 : newValue;
+        newValue = parseInt(selectedTime.minutes) + 1;
+        newTime.minutes = newValue > 59 ? 0 : newValue.toString().padStart(2, '0');
         break;
       case 'period':
         newTime.period = selectedTime.period === 'AM' ? 'PM' : 'AM';
@@ -39,8 +39,8 @@ const TimePicker = ({
         newTime.hours = newValue < 1 ? 12 : newValue;
         break;
       case 'minutes':
-        newValue = selectedTime.minutes - 1;
-        newTime.minutes = newValue < 0 ? 59 : newValue;
+        newValue = parseInt(selectedTime.minutes) - 1;
+        newTime.minutes = newValue < 0 ? 59 : newValue.toString().padStart(2, '0');
         break;
       case 'period':
         newTime.period = selectedTime.period === 'AM' ? 'PM' : 'AM';
