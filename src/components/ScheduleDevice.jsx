@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useDevice from "../hooks/useDevice"
 import { Days } from "./Days";
 import TimePicker from "./TimePicker";
 import Button from "./ui/Button";
@@ -25,6 +24,14 @@ export const ScheduleDevice = ({ initialSchedule, deviceName, deviceId }) => {
       return;
     }
 
+    if (selectedFromTime.minutes < 10) {
+      selectedFromTime.minutes = "0" + String(selectedFromTime.minutes)
+    }
+
+    if (selectedToTime.minutes < 10) {
+      selectedToTime.minutes = "0" + String(selectedToTime.minutes)
+    }
+
     await updateDevice(userDataPath, deviceId, {
       schedule: {
         days: selectedDays,
@@ -33,7 +40,7 @@ export const ScheduleDevice = ({ initialSchedule, deviceName, deviceId }) => {
       }
     });
 
-    toastInfo('Schedule set!');
+    toastInfo('Schedule set succesfully!');
   }
 
   return (
