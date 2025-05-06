@@ -1,8 +1,8 @@
 export const SENSORS = ["Sound sensor (KY-038)", "Motion sensor (HC-SR501)"];
 
 export const GPIO_PINS = [
-  0, 1, 2, 3, 4, 5, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 32,
-  33,
+  15, 2, 0, 4, 16, 17, 5, 18, 19, 21, 22, 23, 13, 12, 14, 27, 26, 25, 33, 32,
+  35, 34,
 ];
 
 export const DAYS = [
