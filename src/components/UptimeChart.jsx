@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import {
   AreaChart,
@@ -19,6 +19,7 @@ export const UsageChart = () => {
   const { areDevicesIncluded } = useSettings();
   const [renderedAreas, setRenderedAreas] = useState([]);
   const [uptime, setUptime] = useState([]);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     if (monthsUptime?.length > 0 && currentMonth) {
@@ -26,6 +27,52 @@ export const UsageChart = () => {
       setUptime(uptime?.data || []);
     }
   }, [monthsUptime, currentMonth]);
+
+  useEffect(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    if (uptime.length > 0 && devices) {
+      intervalRef.current = setInterval(() => {
+        setUptime(prevUptime => {
+          const newUptime = [...prevUptime];
+
+          if (newUptime.length > 0) {
+            const lastIndex = newUptime.length - 1;
+            const lastItem = { ...newUptime[lastIndex] };
+            let totalIncrement = 0;
+
+            Object.entries(devices).forEach(([deviceId, deviceInfo]) => {
+              const deviceName = deviceInfo.name;
+
+              if (deviceInfo.state) {
+                if (typeof lastItem[deviceName] === 'number') {
+                  const increment = 0.0003;
+                  lastItem[deviceName] = lastItem[deviceName] + increment;
+                  totalIncrement += increment;
+                }
+              }
+            });
+
+            if (typeof lastItem.total === 'number') {
+              lastItem.total = lastItem.total + totalIncrement;
+            }
+
+            newUptime[lastIndex] = lastItem;
+          }
+
+          return newUptime;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [uptime.length, devices]);
 
   useEffect(() => {
     const renderAreas = () => {
@@ -46,16 +93,18 @@ export const UsageChart = () => {
   }, [messages, devices]);
 
   return (
-    <div className="col-span-3 bg-[var(--bg-primary)] rounded-lg p-4">
-      <h3 className="text-lg font-bold mb-4"> Usage </h3>
+    <div className="col-span-2 bg-[var(--bg-primary)] rounded-md p-4 text-[var(--text-primary)]">
+      <h3 className="text-center font-bold mb-4"> Usage </h3>
       <div className="w-full h-64">
         {uptime?.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               width="100%"
               height="100%"
-              data={uptime} e
+              data={uptime}
               margin={{ right: 30 }}
+              isAnimationActive={true}
+              animationDuration={500}
             >
               <YAxis
                 tickFormatter={(value) => {
@@ -77,6 +126,7 @@ export const UsageChart = () => {
                 stroke="var(--highlight)"
                 fill="var(--highlight)"
                 fillOpacity={0.6}
+                isAnimationActive={true}
               />
               {areDevicesIncluded &&
                 renderedAreas.length > 0 &&

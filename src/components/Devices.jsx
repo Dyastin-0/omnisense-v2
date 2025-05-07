@@ -5,7 +5,7 @@ const Devices = () => {
   const { devices } = useData();
 
   return (
-    <div className="col-span-3 flex flex-col w-full h-[calc(250px+1rem)] gap-2 p-2 bg-primary rounded-md">
+    <div className="lg:col-span-1 md:col-span-2 col-span-2 flex flex-col w-full h-[calc(250px+1rem)] gap-2 p-2 bg-primary rounded-md">
       <h1 className="text-md text-center text-primary-foreground font-semibold">
         Devices
       </h1>
