@@ -24,7 +24,7 @@ const Device = ({ device }) => {
     }
 
     if (device?.scheduleMode) {
-      toastInfo(`${device.name} is in sensor mode. It cannot be toggled.`);
+      toastInfo(`${device.name} is in schedule mode. It cannot be toggled.`);
       return;
     }
 
