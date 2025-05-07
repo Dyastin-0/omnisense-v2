@@ -23,6 +23,11 @@ const Device = ({ device }) => {
       return;
     }
 
+    if (device?.scheduleMode) {
+      toastInfo(`${device.name} is in sensor mode. It cannot be toggled.`);
+      return;
+    }
+
     const action = newState ? "on" : "off";
     const message = {
       actionType: "stateToggle",

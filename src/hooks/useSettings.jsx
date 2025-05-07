@@ -6,8 +6,8 @@ const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
-  const [areDevicesIncluded, setAreDevicesIncluded] = useState(false);
-  const [areInactiveDaysIncluded, setAreInactiveDaysIncluded] = useState(false);
+  const [areDevicesIncluded, setAreDevicesIncluded] = useState(true);
+  const [areInactiveDaysIncluded, setAreInactiveDaysIncluded] = useState(true);
   const [selectedInstance, setSelectedInstance] = useState("Default");
 
   const toggleIncludeDevice = () => {
