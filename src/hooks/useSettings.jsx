@@ -5,7 +5,6 @@ const SettingsContext = createContext();
 const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
   const [areDevicesIncluded, setAreDevicesIncluded] = useState(true);
   const [areInactiveDaysIncluded, setAreInactiveDaysIncluded] = useState(true);
   const [selectedInstance, setSelectedInstance] = useState("Default");
@@ -41,36 +40,7 @@ export const SettingsProvider = ({ children }) => {
     }
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
-  }, []);
-
-  useEffect(() => {
-    theme === "dark" ? darkTheme() : lightTheme();
-  }, [theme]);
-
-  const lightTheme = () => {
-    const root = document.documentElement;
-    root.classList.remove("dark");
-  };
-
-  const darkTheme = () => {
-    const root = document.documentElement;
-    root.classList.add("dark");
-  };
-
   const value = {
-    theme,
-    toggleTheme,
     areDevicesIncluded,
     toggleIncludeDevice,
     areInactiveDaysIncluded,

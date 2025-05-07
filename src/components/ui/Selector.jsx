@@ -1,11 +1,11 @@
 import Checkbox from "../ui/Checkbox";
 
 const Selector = ({ items, selectedItems, setSelectedItems }) => {
-  const handleCheckboxChange = (genre) => {
+  const handleCheckboxChange = (selected) => {
     setSelectedItems((prev) =>
-      prev.includes(genre)
-        ? prev.filter((item) => item !== genre)
-        : [...prev, genre]
+      prev.includes(selected)
+        ? prev?.filter((item) => item !== selected)
+        : [...prev, selected]
     );
   };
 
