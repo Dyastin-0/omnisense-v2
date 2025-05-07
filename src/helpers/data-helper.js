@@ -48,8 +48,16 @@ export const addDevice = async (
   });
 };
 
-export const addInstance = async (userPath, deviceName) => {
-  pushInArray(`/${userPath}/instances`, deviceName);
+export const addInstance = async (userPath, newInstance) => {
+  updateData(`/${userPath}/${newInstance}`, {
+    devices: {
+      "sample-device": {
+        name: "Sample Device",
+        pin: 26,
+        powerRating: 12,
+      },
+    },
+  });
 };
 
 export const cacheComputedData = (userPath, data) => {

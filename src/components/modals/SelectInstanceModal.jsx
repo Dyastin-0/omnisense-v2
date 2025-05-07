@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useData from "../../hooks/useData"
 import useSettings from "../../hooks/useSettings";
 import useToast from "../hooks/useToast";
@@ -5,13 +6,25 @@ import Checkbox from "../ui/Checkbox";
 import GenericModal from "./GenericModal";
 import Separator from "../ui/Separator";
 import NormalInput from "../ui/NormalInput";
-import { useState } from "react";
+import Button from "../ui/Button";
+import { addInstance } from "../../helpers/data-helper";
+import useAuth from "../../hooks/useAuth";
 
 const SelectInstanceModal = () => {
   const { instances } = useData();
+  const { user } = useAuth()
   const { selectedInstance, setSelectedInstance } = useSettings();
   const { toastInfo } = useToast();
   const [newInstance, setNewInstance] = useState("");
+
+  const createNewInstance = () => {
+    if (instances.includes(newInstance)) {
+      toastInfo("Instance already " + newInstance + " exists.");
+      return;
+    }
+
+    addInstance(user.uid, newInstance);
+  }
 
   return (
     <GenericModal title="Instance" className="h-fit">
@@ -32,13 +45,15 @@ const SelectInstanceModal = () => {
           />
         ))}
         <Separator />
-        <h1 className="text-secondary-foreground">Add</h1>
+        <h1 className="text-secondary-foreground">Create</h1>
         <NormalInput
           placeholder="New instance"
           value={newInstance}
           onChange={(e) => setNewInstance(e.target.value)}
         />
+        <Button text="Create new instance" onClick={createNewInstance} />
       </div>
+
     </GenericModal>
   )
 }

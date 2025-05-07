@@ -93,9 +93,9 @@ export const UsageChart = () => {
   }, [messages, devices]);
 
   return (
-    <div className="col-span-2 bg-[var(--bg-primary)] rounded-md p-4 text-[var(--text-primary)]">
-      <h3 className="text-center font-bold mb-4"> Usage </h3>
-      <div className="w-full h-64">
+    <div className=" col-span-2 bg-primary rounded-md p-4 text-primary-foreground">
+      <h3 className="text-md text-center font-bold mb-4">Usage</h3>
+      <div className="text-xs w-full h-64">
         {uptime?.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
