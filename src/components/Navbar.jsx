@@ -57,26 +57,20 @@ const Navbar = ({ toggleSideNavbar }) => {
       animate={isScrollingDown ? { y: -100 } : { y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
     >
-      <div className="flex justify-center items-center gap-2">
-        {viewWidth <= 768 && (
-          <FontAwesomeIcon
-            icon={faBars}
-            onClick={toggleSideNavbar}
-            className="hover:cursor-pointer"
-          />
-        )}
-        {viewWidth > 768 && <Omnisense />}
+      <div className="flex justify-center items-center gap-2">  
+      {viewWidth > 768 ?
+        <Omnisense /> : 
+        <img src="icon.png" className="max-w-6 min-w-6 max-h-6 min-h-6" />
+      }
       </div>
       <div className="flex w-full justify-center items-center gap-1">
         {user &&
-          viewWidth > 768 &&
           routes.map((route, index) => (
             <Tooltip key={index} text={route.name}>
               <Link path={route.path} icon={route.icon} />
             </Tooltip>
           ))}
         {!user &&
-          viewWidth > 768 &&
           authRoutes.map((route, index) => (
             <Tooltip key={index} text={route.name}>
               <Link path={route.path} name={route.name} icon={route.icon} />
@@ -85,25 +79,15 @@ const Navbar = ({ toggleSideNavbar }) => {
       </div>
       <div className="flex w-fit gap-2 justify-center items-center">
         {user && (
-          <>
-            <Button
-              text="Add device"
-              icon={faPlus}
-              className="text-nowrap font-semibold"
-              onClick={() => {
-                setModal(<AddDeviceModal />);
-                setOpen(true);
-              }}
-            />
-            <Button
-              text="Select instance"
-              className="text-nowrap font-semibold"
-              onClick={() => {
-                setModal(<SelectInstanceModal />);
-                setOpen(true);
-              }}
-            />
-          </>
+          <Button
+            text="Add device"
+            icon={faPlus}
+            className="text-nowrap font-semibold"
+            onClick={() => {
+              setModal(<AddDeviceModal />);
+              setOpen(true);
+            }}
+          /> 
         )}
         <Tooltip text="Toggle theme">
           <Button
