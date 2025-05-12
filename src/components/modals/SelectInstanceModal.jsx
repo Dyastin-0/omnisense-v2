@@ -17,13 +17,14 @@ const SelectInstanceModal = () => {
   const { toastInfo } = useToast();
   const [newInstance, setNewInstance] = useState("");
 
-  const createNewInstance = () => {
+  const createNewInstance = async () => {
     if (instances.includes(newInstance)) {
       toastInfo("Instance already " + newInstance + " exists.");
       return;
     }
 
-    addInstance(user.uid, newInstance);
+    await addInstance(user.uid, newInstance);
+    toastInfo("New instance created.");
   }
 
   return (
