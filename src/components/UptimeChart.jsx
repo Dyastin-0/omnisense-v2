@@ -14,7 +14,7 @@ import useData from "../hooks/useData";
 import useSettings from "../hooks/useSettings";
 import CustomTooltip from "./CustomTooltip";
 
-export const UsageChart = () => {
+export const UptimeChart = () => {
   const { devices, messages, monthsUptime, currentMonth } = useData();
   const { areDevicesIncluded } = useSettings();
   const [renderedAreas, setRenderedAreas] = useState([]);
@@ -25,6 +25,7 @@ export const UsageChart = () => {
     if (monthsUptime?.length > 0 && currentMonth) {
       const uptime = monthsUptime.find((month) => month.month === currentMonth);
       setUptime(uptime?.data || []);
+      console.log(uptime)
     }
   }, [monthsUptime, currentMonth]);
 
@@ -145,4 +146,4 @@ export const UsageChart = () => {
   );
 };
 
-export default UsageChart;
+export default UptimeChart;

@@ -14,3 +14,5 @@ export const DAYS = [
   "Saturday",
   "Sunday",
 ];
+
+export const COLORS = ["#3674B5", "#578FCA", "#6A9AB0", "#3A6D8C"];
