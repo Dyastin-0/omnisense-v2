@@ -24,7 +24,7 @@ const Logs = () => {
         ref={logsRef}
       >
         {messages &&
-          messages.map((log, index) => <Log key={index} log={log} />)}
+          messages.slice(-20).map((log, index) => <Log key={index} log={log} />)}
       </div>
     </div>
   );
