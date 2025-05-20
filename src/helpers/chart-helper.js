@@ -4,7 +4,7 @@ export const calculateDevicesUptime = (
   messages,
   cachedCalculatedUptime,
   includeInactiveDays,
-  userDataPath
+  userDataPath,
 ) => {
   const latestOn = {};
   const dayTotal = {};
@@ -176,7 +176,7 @@ export const calculateConsumptionAndCost = (
   devices,
   rate = 10.12,
   cache,
-  userPath
+  userPath,
 ) => {
   const today = new Date().toLocaleDateString("en-US", {
     month: "long",
@@ -202,7 +202,7 @@ export const calculateConsumptionAndCost = (
         }
         return acc;
       },
-      {}
+      {},
     );
 
     const Total = Object.values(consumptionData).reduce(
@@ -211,7 +211,7 @@ export const calculateConsumptionAndCost = (
         sum.cost += val.cost;
         return sum;
       },
-      { consumption: 0, cost: 0 }
+      { consumption: 0, cost: 0 },
     );
 
     const computedData = { ...data, ...consumptionData, Total };
@@ -227,7 +227,7 @@ export const calculateConsumptionAndCost = (
       acc.consumption += day.Total.consumption;
       return acc;
     },
-    { cost: 0, consumption: 0 }
+    { cost: 0, consumption: 0 },
   );
 
   return { days, total };

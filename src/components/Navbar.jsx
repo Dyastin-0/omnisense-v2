@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import axios from "axios";
 import Button from "./ui/Button";
 import { Dropdown, DropdownItem } from "./ui/Dropdown";
 import useThemeToggle from "../hooks/useTheme";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
   faGear,
   faPlus,
   faSignOut,
@@ -23,9 +20,8 @@ import Tooltip from "./ui/Tooltip";
 import { logOut } from "../config/auth";
 import useModal from "./hooks/useModal";
 import AddDeviceModal from "./modals/AddDeviceModal";
-import SelectInstanceModal from "./modals/SelectInstanceModal";
 
-const Navbar = ({ toggleSideNavbar }) => {
+const Navbar = () => {
   const { toggleTheme, icon } = useThemeToggle();
   const { user, reset } = useAuth();
   const { viewWidth } = useViewport();
@@ -57,11 +53,11 @@ const Navbar = ({ toggleSideNavbar }) => {
       animate={isScrollingDown ? { y: -100 } : { y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
     >
-      <div className="flex justify-center items-center gap-2">  
-      {viewWidth > 768 ?
-        <Omnisense /> : 
-        <img src="icon.png" className="max-w-6 min-w-6 max-h-6 min-h-6" />
-      }
+      <div className="flex justify-center items-center gap-2">
+        {viewWidth > 768 ?
+          <Omnisense /> :
+          <img src="icon.png" className="max-w-6 min-w-6 max-h-6 min-h-6" />
+        }
       </div>
       <div className="flex w-full justify-center items-center gap-1">
         {user &&
@@ -87,7 +83,7 @@ const Navbar = ({ toggleSideNavbar }) => {
               setModal(<AddDeviceModal />);
               setOpen(true);
             }}
-          /> 
+          />
         )}
         <Tooltip text="Toggle theme">
           <Button

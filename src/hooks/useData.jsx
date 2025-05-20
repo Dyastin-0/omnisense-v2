@@ -22,13 +22,10 @@ export const DataProvider = ({ children }) => {
   const [isFetching, setIsFetching] = useState(true);
   const [devices, setDevices] = useState(null);
   const [messages, setMessages] = useState(null);
-  const [currentMonthData, setCurrentMonthData] = useState([]);
-  const [months, setMonths] = useState([]);
   const [monthsUptime, setMonthsUptime] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(null);
   const [instances, setInstances] = useState(["Default"]);
   const [microcontroller, setMicrocontroller] = useState(null);
-  const [cachedComputedData, setCachedComputedData] = useState(null);
   const [cachedUptimeData, setCachedUptimeData] = useState(null);
 
   useEffect(() => {
@@ -75,14 +72,6 @@ export const DataProvider = ({ children }) => {
         setCachedUptimeData(snapshot.val() || {});
       });
 
-      const previouslyComputedDataRef = ref(
-        db,
-        `${userDataPath}/cachedComputedData`
-      );
-
-      get(previouslyComputedDataRef).then((snapshot) => {
-        setCachedComputedData(snapshot.val() || {});
-      });
     };
     user && fetchData();
   }, [user, userDataPath]);
@@ -92,7 +81,7 @@ export const DataProvider = ({ children }) => {
   }, [devices, messages]);
 
   useEffect(() => {
-    if (messages && cachedComputedData && cachedUptimeData) {
+    if (messages && cachedUptimeData) {
       const date = new Date();
       const month = date.toLocaleString("default", { month: "long" });
       const year = date.getFullYear();
@@ -116,31 +105,14 @@ export const DataProvider = ({ children }) => {
 
       setMonthsUptime(data);
 
-      const monthsData = data.map((month) => {
-        return {
-          month: month.month,
-          ...calculateConsumptionAndCost(
-            month.data,
-            devices,
-            10.12,
-            cachedComputedData,
-            userDataPath
-          ),
-        };
-      });
-
-      setCurrentMonthData(monthsData.find((month) => month.month === key));
-      setMonths(monthsData);
     }
-  }, [messages, cachedComputedData, cachedUptimeData, areInactiveDaysIncluded]);
+  }, [messages, cachedUptimeData, areInactiveDaysIncluded]);
 
   const value = {
     isFetching,
     devices,
     messages,
-    months,
     monthsUptime,
-    currentMonthData,
     currentMonth,
     instances,
     microcontroller,
